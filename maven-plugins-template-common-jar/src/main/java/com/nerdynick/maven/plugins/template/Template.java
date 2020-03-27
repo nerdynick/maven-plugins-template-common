@@ -10,4 +10,16 @@ public class Template{
 		this.input = input;
 		this.output = output;
 	}
+	
+	@Override
+	public String toString() {
+		final StringBuilder b = new StringBuilder()
+			.append(this.getClass().getSimpleName())
+			.append('[')
+			.append("Input=").append(this.input)
+			.append(" Onput=").append(this.output)
+			.append(']');
+		
+			return b.toString();
+	}
 }

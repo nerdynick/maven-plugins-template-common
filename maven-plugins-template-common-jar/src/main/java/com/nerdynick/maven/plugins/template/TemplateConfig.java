@@ -10,8 +10,14 @@ import java.util.regex.Pattern;
 
 import org.apache.maven.model.FileSet;
 import org.apache.maven.plugins.annotations.Parameter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.google.common.base.Strings;
 
 public class TemplateConfig {
+	private static final Logger LOG = LoggerFactory.getLogger(TemplateConfig.class);
+	
 	@Parameter(name="outputDir", required=true)
 	private File outputDir;
 	
@@ -29,6 +35,27 @@ public class TemplateConfig {
 	
 	@Parameter(name="outputName", required=false)
 	private String outputName;
+	
+	@Parameter(name="outputExt", required=false)
+	private String outputExt;
+	
+	@Override
+	public String toString() {
+		final StringBuilder b = new StringBuilder()
+			.append(this.getClass().getSimpleName())
+			.append('[')
+			.append("InputDir=").append(this.inputDir)
+			.append(" InputDirs=").append(this.inputDirs)
+			.append(" InputFile=").append(this.inputFile)
+			.append(" InputFiles=").append(this.inputFiles)
+			.append(" OutputDir=").append(this.outputDir)
+			.append(" OutputName=").append(this.outputName)
+			.append(" OutputExt=").append(this.outputExt)
+			.append(']');
+		
+		
+		return b.toString();
+	}
 	
 	public File getOutputDir() {
 		return outputDir;
@@ -54,6 +81,9 @@ public class TemplateConfig {
 	public void setOutputName(String outputName) {
 		this.outputName = outputName;
 	}
+	public void setOutputExt(String outputExt) {
+		this.outputExt = outputExt;
+	}
 	
 	public List<Template> getTemplates() throws IOException{
 		List<Template> templates = new ArrayList<>();
@@ -67,33 +97,49 @@ public class TemplateConfig {
 		Path outputPath = outputDir.toPath();
 		
 		if(inputDir != null){
+			LOG.debug("Input Dir: {}", inputDir);
 			handleDir(inputDir, outputPath, templates);
 		}
 		
 		if(inputDirs != null){
+			LOG.debug("Input Dirs: {}", inputDirs);
 			for(FileSet s: inputDirs){
 				handleDir(s, outputPath, templates);
 			}
 		}
 		
 		if(inputFiles != null){
+			LOG.debug("Input Files: {}", inputFiles);
 			for(File f: inputFiles){
 				checkFile(f);
-				templates.add(new Template(f, outputPath.resolve(f.getName()).toFile()));
+				final Template t = new Template(f, this.getOutputFile(outputPath, f));
+				LOG.debug("Template: {}", t);
+				templates.add(t);
 			}
 		}
 		
 		if(inputFile != null){
+			LOG.debug("Input File: {}", inputFile);
 			checkFile(inputFile);
-			
-			if(outputName != null && !outputName.isEmpty()){
-				templates.add(new Template(inputFile, outputPath.resolve(outputName).toFile()));
-			} else {
-				templates.add(new Template(inputFile, outputPath.resolve(inputFile.getName()).toFile()));
-			}
+			final Template t = new Template(inputFile, this.getOutputFile(outputPath, inputFile));
+			LOG.debug("Template: {}", t);
+			templates.add(t);
 		}
 		
 		return templates;
+	}
+	
+	protected File getOutputFile(final Path outputPath, final File inputFile) {
+		if(outputName != null && !outputName.isEmpty()){
+			return outputPath.resolve(outputName).toFile();
+		} else if(!Strings.isNullOrEmpty(this.outputExt)){
+			String filename = inputFile.getName();
+			filename = filename.substring(0, filename.lastIndexOf('.')+1) + this.outputExt;
+			
+			return outputPath.resolve(filename).toFile();
+		} else {
+			return outputPath.resolve(inputFile.getName()).toFile();
+		}
 	}
 	
 	protected void handleDir(final FileSet inputDir, final Path outputPath, List<Template> templates) throws IOException {
@@ -137,7 +183,9 @@ public class TemplateConfig {
 			if(f.isDirectory()){
 				continue;
 			}
-			templates.add(new Template(f, outputPath.resolve(f.getName()).toFile()));
+			final Template t = new Template(f, this.getOutputFile(outputPath, f));
+			LOG.debug("Template: {}", t);
+			templates.add(t);
 		}
 	}
 	
