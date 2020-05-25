@@ -13,11 +13,23 @@ Common collection of classes for creating Maven Plugins using templating libs
     <dependencies>
         <dependency>
             <groupId>com.nerdynick</groupId>
-            <artifactId>maven-plugins-template-common-bom</artifactId>
+            <artifactId>maven-plugins-template-plugin-bom</artifactId>
             <version>${version}</version>
             <type>pom</type>
             <scope>import</scope>
         </dependency>
     </dependencies>
 </dependencyManagement>
+
+<dependencies>
+    <dependency>
+        <groupId>com.nerdynick</groupId>
+        <artifactId>maven-plugins-template-plugin-core</artifactId>
+    </dependency>
+    <dependency>
+        <groupId>com.nerdynick</groupId>
+        <artifactId>maven-plugins-template-plugin-test</artifactId>
+        <scope>test</scope>
+    </dependency>
+</dependencies>
 ```
