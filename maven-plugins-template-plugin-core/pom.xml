@@ -4,10 +4,10 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>com.nerdynick</groupId>
-		<artifactId>maven-plugins-template-common</artifactId>
+		<artifactId>maven-plugins-template-plugin</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-	<artifactId>maven-plugins-template-common-jar</artifactId>
+	<artifactId>maven-plugins-template-plugin-core</artifactId>
 	<dependencies>
 		<dependency>
 			<groupId>org.apache.maven</groupId>
@@ -46,4 +46,5 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
+	<name>Maven Plugins Template Plugin Core JAR</name>
 </project>

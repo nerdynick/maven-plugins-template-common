@@ -3,19 +3,20 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.nerdynick</groupId>
-	<artifactId>maven-plugins-template-common</artifactId>
+	<artifactId>maven-plugins-template-plugin</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
-	<name>maven-plugins-template-common</name>
-	<description>Common collection of classes for creating Maven Plugins using templating libs</description>
-	<url>https://github.com/nerdynick/jinja-maven-plugin</url>
+	<name>Maven Plugins Templated Plugin Common Lib</name>
+	<description>Common collection of classes for creating Maven Plugins using templating libraries</description>
+	<url>https://github.com/nerdynick/maven-plugins-template-common</url>
 
 	<scm>
 		<url>https://github.com/nerdynick/maven-plugins-template-common</url>
 		<connection>scm:git:ssh://git@github.com/nerdynick/maven-plugins-template-common.git</connection>
 		<developerConnection>scm:git:ssh://git@github.com/nerdynick/maven-plugins-template-common.git</developerConnection>
 	</scm>
+	
 	<ciManagement>
 		<system>Travis CI</system>
 		<url>https://travis-ci.org/github/nerdynick/maven-plugins-template-common</url>
@@ -47,9 +48,9 @@
 
 
 	<modules>
-		<module>maven-plugins-template-common-jar</module>
-		<module>maven-plugins-template-common-test</module>
-		<module>maven-plugins-template-common-bom</module>
+		<module>maven-plugins-template-plugin-core</module>
+		<module>maven-plugins-template-plugin-test</module>
+		<module>maven-plugins-template-plugin-bom</module>
 	</modules>
 
 	<dependencyManagement>
@@ -170,7 +171,7 @@
 			<distributionManagement>
 				<snapshotRepository>
 					<id>github</id>
-					<url>https://maven.pkg.github.com/nerdynick/commons-configuration-utils</url>
+					<url>https://maven.pkg.github.com/nerdynick/maven-plugins-template-common</url>
 				</snapshotRepository>
 				<repository>
 					<id>ossrh</id>
