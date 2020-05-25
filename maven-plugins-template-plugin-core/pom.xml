@@ -8,6 +8,21 @@
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 	<artifactId>maven-plugins-template-plugin-core</artifactId>
+	
+    <name>Maven Plugins Template Plugin Core JAR</name>
+	
+	<dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.nerdynick</groupId>
+                <artifactId>maven-plugins-template-plugin-bom</artifactId>
+                <version>${project.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+    
 	<dependencies>
 		<dependency>
 			<groupId>org.apache.maven</groupId>
@@ -41,10 +56,8 @@
 
 		<dependency>
 			<groupId>com.nerdynick</groupId>
-			<artifactId>maven-plugins-template-common-test</artifactId>
-			<version>${project.version}</version>
+			<artifactId>maven-plugins-template-plugin-test</artifactId>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
-	<name>Maven Plugins Template Plugin Core JAR</name>
 </project>
